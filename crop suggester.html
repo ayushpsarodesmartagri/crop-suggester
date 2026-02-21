@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌾🌱 एकीकृत कृषि सलाहकार & बजट | Integrated Agri‑Advisor & Budget</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ===== GLOBAL STYLES (merged) ===== */
+        :root {
+            --primary: #27ae60;
+            --primary-dark: #219653;
+            --secondary: #2ecc71;
+            --accent: #f39c12;
+            --light: #ecf0f1;
+            --dark: #2c3e50;
+            --profit: #27ae60;
+            --high-profit: #e74c3c;
+            --medium-profit: #f39c12;
+            --savings: #3498db;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --overlay: rgba(44, 62, 80, 0.9);
+            --border-radius: 16px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --transition: all 0.3s ease;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            padding: 20px;
+            transition: background-image 1s ease-in-out;
+        }
+
+        /* ----- GLOBAL LANGUAGE SWITCHER (in header) ----- */
+        .global-lang-switcher {
+            display: flex;
+            gap: 12px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(12px);
+            padding: 6px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.3);
+            margin-left: auto;
+        }
+        .global-lang-btn {
+            background: transparent;
+            border: none;
+            padding: 10px 22px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: white;
+        }
+        .global-lang-btn.active {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(39, 174, 96, 0.4);
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            backdrop-filter: blur(10px);
+        }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.2); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--primary); box-shadow: 0 5px 15px rgba(39,174,96,0.4); }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        .tab-content { display: none; animation: fadeIn 0.5s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ----- HEADER (with lang switcher) ----- */
+        header {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 30px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-left: 8px solid var(--primary);
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .logo { font-size: 3.5rem; color: var(--primary); animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .header-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .header-text p { font-size: 1.1rem; color: var(--accent); font-weight: 500; }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 30px;
+        }
+        @media (max-width: 900px) { .main-content { grid-template-columns: 1fr; } }
+
+        .form-panel {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-left: 8px solid var(--accent);
+        }
+        .form-panel h2 { display: flex; align-items: center; gap: 10px; font-size: 1.8rem; margin-bottom: 25px; color: var(--primary-dark); }
+        .form-panel h2 i { color: var(--accent); }
+        form { display: grid; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; gap: 8px; }
+        .form-group label {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+        }
+        .form-group label i { color: var(--primary); width: 24px; }
+        .input-hint { font-size: 0.85rem; color: #7f8c8d; font-style: italic; margin-top: 4px; }
+        input, select, button {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            border: none;
+            transition: var(--transition);
+        }
+        input, select {
+            padding: 16px;
+            background: #f8f9fa;
+            color: var(--dark);
+            border: 2px solid #e0e0e0;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(39,174,96,0.2);
+        }
+        button {
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(39,174,96,0.4);
+        }
+        button:hover {
+            background: linear-gradient(135deg, var(--primary-dark), #1e8449);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(39,174,96,0.6);
+        }
+
+        .currency-input { position: relative; }
+        .currency-symbol { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: var(--primary); font-weight: bold; font-size: 1.2rem; }
+        .currency-input input { padding-left: 40px; width: 100%; }
+
+        .results-panel {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            border-left: 8px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+        }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .results-header h2 { display: flex; align-items: center; gap: 10px; font-size: 1.8rem; color: var(--primary-dark); }
+        .results-count { background: var(--primary); color: white; padding: 8px 16px; border-radius: 20px; font-weight: 600; }
+
+        .crop-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 25px; }
+        .crop-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        .crop-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .crop-card::before { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); }
+        .crop-card-header { display: flex; align-items: center; gap: 15px; }
+        .crop-icon { font-size: 2.8rem; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg,#f8f9fa,#ecf0f1); border-radius: 50%; border: 2px solid var(--primary); }
+        .crop-name { font-size: 1.6rem; font-weight: 700; color: var(--dark); }
+        .crop-family { font-size: 0.9rem; color: var(--accent); background: rgba(243,156,18,0.1); padding: 4px 10px; border-radius: 20px; display: inline-block; }
+
+        .fertilizers { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; }
+        .fertilizer-tag { background: rgba(39,174,96,0.1); color: var(--primary-dark); padding: 5px 12px; border-radius: 20px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(39,174,96,0.2); }
+
+        .profit-details { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 10px; padding: 15px; background: #f8f9fa; border-radius: 10px; }
+        .profit-item { text-align: center; }
+        .profit-value { font-size: 1.5rem; font-weight: 700; color: var(--primary-dark); }
+        .profit-label-small { font-size: 0.8rem; color: #7f8c8d; }
+
+        .bg-toggle-btn {
+            position: fixed; top: 20px; right: 20px; z-index: 999;
+            background: var(--primary); color: white; width: 50px; height: 50px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; box-shadow: var(--box-shadow); border: none; font-size: 1.5rem;
+            transition: var(--transition);
+        }
+        .bg-toggle-btn:hover { background: var(--primary-dark); transform: rotate(15deg) scale(1.1); }
+
+        footer {
+            text-align: center; padding: 20px; color: white; font-size: 0.9rem;
+            background: rgba(255,255,255,0.1); border-radius: var(--border-radius);
+            backdrop-filter: blur(10px);
+        }
+
+        /* ----- AGV Budget specific (adapted) ----- */
+        .budget-summary-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; margin-top: 20px;
+        }
+        .budget-summary-card {
+            background: linear-gradient(145deg, #1b5e20, #2e7d32); color: white; padding: 20px;
+            border-radius: 16px; text-align: center; box-shadow: 0 8px 20px rgba(27,94,32,0.3);
+        }
+        .budget-summary-label { font-size: 0.9rem; text-transform: uppercase; opacity: 0.9; margin-bottom: 6px; }
+        .budget-summary-number { font-size: 1.8rem; font-weight: 800; line-height: 1.2; }
+        .budget-summary-unit { font-size: 0.9rem; opacity: 0.9; margin-left: 5px; }
+
+        .budget-cost-table {
+            width: 100%; border-collapse: collapse; background: white; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 15px;
+        }
+        .budget-cost-table th { background: #c8e6c9; color: #1b5e20; font-weight: 600; padding: 14px 12px; text-align: left; }
+        .budget-cost-table td { padding: 12px; border-bottom: 1px solid #e0e0e0; }
+        .budget-crop-item {
+            background: white; border-radius: 60px; padding: 16px 24px; margin-bottom: 12px;
+            border-left: 8px solid #81c784; display: flex; flex-wrap: wrap; align-items: center;
+            justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+        .profit { color: #2e7d32; font-weight: 700; }
+        .loss { color: #c62828; font-weight: 700; }
+        .delete-btn { background: #ffebee; border: none; color: #c62828; font-weight: 700; padding: 8px 20px; border-radius: 40px; cursor: pointer; border: 1px solid #ef9a9a; }
+        .delete-btn:hover { background: #ffcdd2; }
+        .result-placeholder { text-align: center; padding: 40px 20px; color: #7f8c8d; }
+        .result-placeholder i { font-size: 4rem; margin-bottom: 20px; color: #bdc3c7; }
+    </style>
+</head>
+<body>
+    <!-- Background Toggle Button -->
+    <button class="bg-toggle-btn" id="bgToggleBtn"><i class="fas fa-image"></i></button>
+
+    <!-- ===== GLOBAL LANGUAGE SWITCHER (in header) ===== -->
+    <header>
+        <div class="header-content">
+            <div class="logo"><i class="fas fa-tractor"></i></div>
+            <div class="header-text">
+                <h1 id="globalAppTitle">Farmer's Smart Crop & Profit Advisor + AGV</h1>
+                <p id="globalAppSubtitle">एकीकृत कृषि सलाहकार और बजट | Integrated Agri‑Advisor & Budget</p>
+            </div>
+        </div>
+        <div class="global-lang-switcher">
+            <button id="globalLangEn" class="global-lang-btn active" onclick="setGlobalLanguage('en')">🇬🇧 English</button>
+            <button id="globalLangHi" class="global-lang-btn" onclick="setGlobalLanguage('hi')">🇮🇳 हिंदी</button>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-tab="crop-advisor"><i class="fas fa-seedling"></i> <span id="tabCropAdvisor">Crop Advisor</span></button>
+        <button class="tab-btn" data-tab="profit-advisor"><i class="fas fa-chart-line"></i> <span id="tabProfitAdvisor">Profit Advisor</span></button>
+        <button class="tab-btn" data-tab="combined"><i class="fas fa-robot"></i> <span id="tabSmartRec">Smart Recommendations</span></button>
+        <button class="tab-btn" data-tab="budget-planner"><i class="fas fa-calculator"></i> <span id="tabBudget">AGV Budget Planner</span></button>
+    </div>
+
+    <div class="container">
+        <!-- ============ CROP ADVISOR TAB ============ -->
+        <div class="tab-content active" id="crop-advisor">
+            <div class="main-content">
+                <div class="form-panel">
+                    <h2><i class="fas fa-seedling"></i> <span id="cropAdvisorTitle">Crop Selection Assistant</span></h2>
+                    <form id="cropForm">
+                        <div class="form-group">
+                            <label for="prevCrop"><i class="fas fa-history"></i> <span id="prevCropLabel">Previous Crop</span></label>
+                            <input type="text" id="prevCrop" placeholder="e.g. Wheat, Maize, Rice">
+                            <div class="input-hint" id="prevCropHint">Leave empty if first crop or unknown</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="soilType"><i class="fas fa-mountain"></i> <span id="soilTypeLabel">Soil Type</span></label>
+                            <select id="soilType">
+                                <option value="Loam" id="soilLoam">Loam Soil</option>
+                                <option value="Clay" id="soilClay">Clay Soil</option>
+                                <option value="Sandy" id="soilSandy">Sandy Soil</option>
+                                <option value="Silty" id="soilSilty">Silty Soil</option>
+                                <option value="Peaty" id="soilPeaty">Peaty Soil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cropCategory"><i class="fas fa-layer-group"></i> <span id="cropCategoryLabel">Crop Category</span></label>
+                            <select id="cropCategory">
+                                <option value="vegetable" id="catVeg">Vegetables</option>
+                                <option value="grain" id="catGrain">Grains</option>
+                                <option value="fruit" id="catFruit">Fruits</option>
+                                <option value="cash" id="catCash">Cash Crops</option>
+                                <option value="wood" id="catWood">Wood / Tree Crops</option>
+                                <option value="herb" id="catHerb">Herbs & Spices</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="season"><i class="fas fa-calendar-alt"></i> <span id="seasonLabel">Season</span></label>
+                            <select id="season">
+                                <option value="kharif" id="seasonKharif">Kharif (Monsoon)</option>
+                                <option value="rabi" id="seasonRabi">Rabi (Winter)</option>
+                                <option value="zaid" id="seasonZaid">Zaid (Summer)</option>
+                                <option value="any" id="seasonAny">Any Season</option>
+                            </select>
+                        </div>
+                        <button type="button" id="findCropsBtn"><i class="fas fa-robot"></i> <span id="findCropsBtnText">Find Suitable Crops</span></button>
+                    </form>
+                </div>
+                <div class="results-panel">
+                    <div class="results-header">
+                        <h2><i class="fas fa-leaf"></i> <span id="recommendedCropsTitle">Recommended Crops</span></h2>
+                        <div class="results-count" id="cropResultsCount">0 crops</div>
+                    </div>
+                    <div class="results-container">
+                        <div class="result-placeholder" id="cropResultPlaceholder">
+                            <i class="fas fa-seedling"></i>
+                            <h3 id="cropPlaceholderTitle">Find Suitable Crops</h3>
+                            <p id="cropPlaceholderText">Fill out your farm details to see crop recommendations based on soil and rotation.</p>
+                        </div>
+                        <div class="crop-grid" id="cropGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ PROFIT ADVISOR TAB ============ -->
+        <div class="tab-content" id="profit-advisor">
+            <div class="main-content">
+                <div class="form-panel">
+                    <h2><i class="fas fa-calculator"></i> <span id="profitAdvisorTitle">Profit Calculator</span></h2>
+                    <form id="profitForm">
+                        <div class="form-group">
+                            <label for="region"><i class="fas fa-map-marker-alt"></i> <span id="regionLabel">Your Region</span></label>
+                            <select id="region">
+                                <option value="north" id="regionNorth">North India</option>
+                                <option value="south" id="regionSouth">South India</option>
+                                <option value="east" id="regionEast">East India</option>
+                                <option value="west" id="regionWest">West India</option>
+                                <option value="central" id="regionCentral">Central India</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="profitSoil"><i class="fas fa-mountain"></i> <span id="profitSoilLabel">Soil Type</span></label>
+                            <select id="profitSoil">
+                                <option value="Loam" id="profitSoilLoam">Loam Soil (Most Profitable)</option>
+                                <option value="Clay" id="profitSoilClay">Clay Soil</option>
+                                <option value="Sandy" id="profitSoilSandy">Sandy Soil</option>
+                                <option value="Silty" id="profitSoilSilty">Silty Soil</option>
+                                <option value="Black" id="profitSoilBlack">Black Cotton Soil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="landSize"><i class="fas fa-ruler-combined"></i> <span id="landSizeLabel">Land Size (Acres)</span></label>
+                            <input type="number" id="landSize" min="0.5" max="1000" step="0.5" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="investment"><i class="fas fa-money-bill-wave"></i> <span id="investmentLabel">Investment Capacity (₹)</span></label>
+                            <div class="currency-input">
+                                <span class="currency-symbol">₹</span>
+                                <input type="text" id="investment" value="5,00,000">
+                            </div>
+                        </div>
+                        <button type="button" id="calculateProfitBtn"><i class="fas fa-chart-line"></i> <span id="calcProfitBtnText">Calculate Profit</span></button>
+                    </form>
+                </div>
+                <div class="results-panel">
+                    <div class="results-header">
+                        <h2><i class="fas fa-rupee-sign"></i> <span id="profitAnalysisTitle">Profit Analysis</span></h2>
+                        <div class="results-count" id="profitResultsCount">0 crops</div>
+                    </div>
+                    <div class="results-container">
+                        <div class="result-placeholder" id="profitResultPlaceholder">
+                            <i class="fas fa-search-dollar"></i>
+                            <h3 id="profitPlaceholderTitle">Profit Analysis</h3>
+                            <p id="profitPlaceholderText">Fill details to see most profitable crops.</p>
+                        </div>
+                        <div class="crop-grid" id="profitGrid"></div>
+                        <div class="profit-summary" id="profitSummary" style="display: none;">
+                            <h3><i class="fas fa-chart-pie"></i> <span id="profitSummaryTitle">Summary</span></h3>
+                            <div style="display: grid; grid-template-columns: repeat(3,1fr); gap:15px;">
+                                <div style="text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;">
+                                    <div style="font-size:1.8rem; font-weight:700; color:var(--primary-dark);" id="avgProfit">₹0</div>
+                                    <div style="font-size:0.9rem;" id="avgProfitLabel">Avg. Profit/Acre</div>
+                                </div>
+                                <div style="text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;">
+                                    <div style="font-size:1.8rem; font-weight:700; color:var(--primary-dark);" id="avgInvestment">₹0</div>
+                                    <div style="font-size:0.9rem;" id="avgInvestmentLabel">Avg. Investment</div>
+                                </div>
+                                <div style="text-align:center; padding:15px; background:#f8f9fa; border-radius:10px;">
+                                    <div style="font-size:1.8rem; font-weight:700; color:var(--primary-dark);" id="avgROI">0%</div>
+                                    <div style="font-size:0.9rem;" id="avgROILabel">Avg. ROI</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ SMART RECOMMENDATIONS TAB ============ -->
+        <div class="tab-content" id="combined">
+            <div class="main-content">
+                <div class="form-panel">
+                    <h2><i class="fas fa-brain"></i> <span id="smartTitle">Smart Recommendations</span></h2>
+                    <form id="smartForm">
+                        <div class="form-group">
+                            <label for="smartPrevCrop"><i class="fas fa-history"></i> <span id="smartPrevCropLabel">Previous Crop</span></label>
+                            <input type="text" id="smartPrevCrop" placeholder="e.g. Wheat, Maize">
+                        </div>
+                        <div class="form-group">
+                            <label for="smartSoil"><i class="fas fa-mountain"></i> <span id="smartSoilLabel">Soil Type</span></label>
+                            <select id="smartSoil">
+                                <option value="Loam" id="smartSoilLoam">Loam Soil</option>
+                                <option value="Clay" id="smartSoilClay">Clay Soil</option>
+                                <option value="Sandy" id="smartSoilSandy">Sandy Soil</option>
+                                <option value="Silty" id="smartSoilSilty">Silty Soil</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="smartRegion"><i class="fas fa-map-marker-alt"></i> <span id="smartRegionLabel">Region</span></label>
+                            <select id="smartRegion">
+                                <option value="north" id="smartRegionNorth">North India</option>
+                                <option value="south" id="smartRegionSouth">South India</option>
+                                <option value="east" id="smartRegionEast">East India</option>
+                                <option value="west" id="smartRegionWest">West India</option>
+                                <option value="central" id="smartRegionCentral">Central India</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="smartLandSize"><i class="fas fa-ruler-combined"></i> <span id="smartLandSizeLabel">Land Size (Acres)</span></label>
+                            <input type="number" id="smartLandSize" min="0.5" step="0.5" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="smartInvestment"><i class="fas fa-money-bill-wave"></i> <span id="smartInvestmentLabel">Investment (₹)</span></label>
+                            <div class="currency-input">
+                                <span class="currency-symbol">₹</span>
+                                <input type="text" id="smartInvestment" value="5,00,000">
+                            </div>
+                        </div>
+                        <button type="button" id="smartRecommendBtn"><i class="fas fa-robot"></i> <span id="smartBtnText">Get Smart Recommendations</span></button>
+                    </form>
+                </div>
+                <div class="results-panel">
+                    <div class="results-header">
+                        <h2><i class="fas fa-lightbulb"></i> <span id="smartResultsTitle">Smart Recommendations</span></h2>
+                        <div class="results-count" id="smartResultsCount">0 crops</div>
+                    </div>
+                    <div class="results-container">
+                        <div class="result-placeholder" id="smartResultPlaceholder">
+                            <i class="fas fa-brain"></i>
+                            <h3 id="smartPlaceholderTitle">Smart Crop Selection</h3>
+                            <p id="smartPlaceholderText">Fill details for intelligent recommendations.</p>
+                        </div>
+                        <div class="crop-grid" id="smartGrid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============ AGV BUDGET PLANNER TAB ============ -->
+        <div class="tab-content" id="budget-planner">
+            <div style="display: flex; flex-direction: column; gap: 30px;">
+                <!-- Add Crop Form -->
+                <div class="form-panel" style="border-left-color: #66bb6a;">
+                    <h2><i class="fas fa-plus-circle"></i> <span id="budgetAddCropTitle">🌱 Add New Crop</span></h2>
+                    <div style="display: flex; flex-wrap: wrap; gap: 25px; align-items: flex-end;">
+                        <div class="form-group" style="flex: 2 1 250px;">
+                            <label id="budgetCropNameLabel" for="budget-cropNameInput"><i class="fas fa-seedling"></i> <span id="budgetCropNameText">Crop name</span></label>
+                            <input type="text" id="budget-cropNameInput" placeholder="e.g., Corn, Rice, Apples...">
+                        </div>
+                        <div class="form-group" style="flex: 1 1 150px;">
+                            <label id="budgetAcresLabel" for="budget-acresInput"><i class="fas fa-ruler-combined"></i> <span id="budgetAcresText">Acres</span></label>
+                            <input type="number" id="budget-acresInput" placeholder="0.0" min="0.1" step="0.1" value="10">
+                        </div>
+                        <button class="btn" id="budget-addButton" onclick="budgetAddCrop()" style="flex: 0 0 auto;">
+                            <i class="fas fa-plus-circle"></i> <span id="budgetAddBtnText">Add Crop</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Crop List -->
+                <div class="results-panel">
+                    <div class="results-header">
+                        <h2><i class="fas fa-list"></i> <span id="budgetCropListTitle">Your Crops</span></h2>
+                        <div class="results-count" id="budget-cropCountDisplay">0 crops</div>
+                    </div>
+                    <div id="budget-cropListContainer">
+                        <div class="result-placeholder" id="budget-emptyMessage">
+                            <i class="fas fa-seedling"></i>
+                            <h3 id="budgetEmptyText">✨ No crops added yet. Add your first crop above.</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Panel -->
+                <div id="budget-summaryPanel" class="budget-summary-grid" style="display: none;">
+                    <div class="budget-summary-card"><div class="budget-summary-label" id="budgetTotalAcresLabel">Total acres</div><div><span class="budget-summary-number" id="budget-totalAcres">0</span><span class="budget-summary-unit" id="budget-acresUnit">ac</span></div></div>
+                    <div class="budget-summary-card"><div class="budget-summary-label" id="budgetTotalCostLabel">Total cost</div><div><span class="budget-summary-number" id="budget-totalCost">₹0</span></div></div>
+                    <div class="budget-summary-card"><div class="budget-summary-label" id="budgetTotalRevenueLabel">Total revenue</div><div><span class="budget-summary-number" id="budget-totalRevenue">₹0</span></div></div>
+                    <div class="budget-summary-card"><div class="budget-summary-label" id="budgetNetProfitLabel">Net profit</div><div><span class="budget-summary-number" id="budget-totalProfit">₹0</span></div></div>
+                    <div class="budget-summary-card"><div class="budget-summary-label" id="budgetRoiLabel">ROI</div><div><span class="budget-summary-number" id="budget-totalRoi">0</span><span class="budget-summary-unit">%</span></div></div>
+                </div>
+
+                <!-- Cost Breakdown Table -->
+                <div id="budget-costBreakdownSection" class="form-panel" style="display: none; border-left-color: #2e7d32;">
+                    <h3 id="budget-costBreakdownTitle"><i class="fas fa-file-invoice-dollar"></i> 💰 <span id="budgetCostBreakdownText">Total cost breakdown (all crops)</span></h3>
+                    <div style="overflow-x: auto;">
+                        <table class="budget-cost-table">
+                            <thead><tr><th id="budget-categoryHeader">Category</th><th id="budget-amountHeader">Amount (₹)</th><th id="budget-percentHeader">%</th></tr></thead>
+                            <tbody id="budget-costBreakdownBody"></tbody>
+                        </table>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                        <button class="btn" id="budget-exportButton" onclick="budgetExportReport()" style="background: var(--savings);"><i class="fas fa-download"></i> <span id="budgetExportText">📥 Download report</span></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p id="footerText">Farmer's Smart Crop & Profit Advisor + AGV Budget Maker © 2025 | Empowering Farmers with Intelligent Agriculture & Precision Budgeting</p>
+        </footer>
+    </div>
+
+    <script>
+        // =====================================================================
+        // 🌍🌽🌾 GLOBAL BILINGUAL TRANSLATIONS (ENGLISH + HINDI) – ALL SECTIONS
+        // =====================================================================
+        const translations = {
+            en: {
+                // Global header & tabs
+                globalAppTitle: "Farmer's Smart Crop & Profit Advisor + AGV",
+                globalAppSubtitle: "Integrated Agri‑Advisor & Budget",
+                tabCropAdvisor: "Crop Advisor",
+                tabProfitAdvisor: "Profit Advisor",
+                tabSmartRec: "Smart Recommendations",
+                tabBudget: "AGV Budget Planner",
+                // Crop Advisor
+                cropAdvisorTitle: "Crop Selection Assistant",
+                prevCropLabel: "Previous Crop",
+                prevCropHint: "Leave empty if first crop or unknown",
+                soilTypeLabel: "Soil Type",
+                soilLoam: "Loam Soil",
+                soilClay: "Clay Soil",
+                soilSandy: "Sandy Soil",
+                soilSilty: "Silty Soil",
+                soilPeaty: "Peaty Soil",
+                cropCategoryLabel: "Crop Category",
+                catVeg: "Vegetables",
+                catGrain: "Grains",
+                catFruit: "Fruits",
+                catCash: "Cash Crops",
+                catWood: "Wood / Tree Crops",
+                catHerb: "Herbs & Spices",
+                seasonLabel: "Season",
+                seasonKharif: "Kharif (Monsoon)",
+                seasonRabi: "Rabi (Winter)",
+                seasonZaid: "Zaid (Summer)",
+                seasonAny: "Any Season",
+                findCropsBtnText: "Find Suitable Crops",
+                recommendedCropsTitle: "Recommended Crops",
+                cropPlaceholderTitle: "Find Suitable Crops",
+                cropPlaceholderText: "Fill out your farm details to see crop recommendations based on soil and rotation.",
+                // Profit Advisor
+                profitAdvisorTitle: "Profit Calculator",
+                regionLabel: "Your Region",
+                regionNorth: "North India",
+                regionSouth: "South India",
+                regionEast: "East India",
+                regionWest: "West India",
+                regionCentral: "Central India",
+                profitSoilLabel: "Soil Type",
+                profitSoilLoam: "Loam Soil (Most Profitable)",
+                profitSoilClay: "Clay Soil",
+                profitSoilSandy: "Sandy Soil",
+                profitSoilSilty: "Silty Soil",
+                profitSoilBlack: "Black Cotton Soil",
+                landSizeLabel: "Land Size (Acres)",
+                investmentLabel: "Investment Capacity (₹)",
+                calcProfitBtnText: "Calculate Profit",
+                profitAnalysisTitle: "Profit Analysis",
+                profitPlaceholderTitle: "Profit Analysis",
+                profitPlaceholderText: "Fill details to see most profitable crops.",
+                profitSummaryTitle: "Summary",
+                avgProfitLabel: "Avg. Profit/Acre",
+                avgInvestmentLabel: "Avg. Investment",
+                avgROILabel: "Avg. ROI",
+                // Smart Recommendations
+                smartTitle: "Smart Recommendations",
+                smartPrevCropLabel: "Previous Crop",
+                smartSoilLabel: "Soil Type",
+                smartSoilLoam: "Loam Soil",
+                smartSoilClay: "Clay Soil",
+                smartSoilSandy: "Sandy Soil",
+                smartSoilSilty: "Silty Soil",
+                smartRegionLabel: "Region",
+                smartRegionNorth: "North India",
+                smartRegionSouth: "South India",
+                smartRegionEast: "East India",
+                smartRegionWest: "West India",
+                smartRegionCentral: "Central India",
+                smartLandSizeLabel: "Land Size (Acres)",
+                smartInvestmentLabel: "Investment (₹)",
+                smartBtnText: "Get Smart Recommendations",
+                smartResultsTitle: "Smart Recommendations",
+                smartPlaceholderTitle: "Smart Crop Selection",
+                smartPlaceholderText: "Fill details for intelligent recommendations.",
+                // Dynamic card translations (used in advisor display functions)
+                duration: "Duration",
+                days: "days",
+                fertilizers: "Fertilizers",
+                suitableFor: "Suitable for",
+                soil: "soil",
+                quickGrowing: "Quick growing crop",
+                mediumLong: "Medium to long duration crop",
+                investmentCapacity: "Investment capacity",
+                sufficient: "✅ Sufficient",
+                insufficient: "⚠️ Insufficient",
+                highProfit: "High Profit",
+                bestFit: "Best Fit",
+                totalProfit: "Total Profit",
+                roi: "ROI",
+                investment: "Investment",
+                profitPerAcre: "Profit/Acre",
+                status: "Status",
+                // Budget Planner (full set, merged)
+                budgetAddCropTitle: "🌱 Add New Crop",
+                budgetCropNameText: "Crop name",
+                budgetAcresText: "Acres",
+                budgetAddBtnText: "Add Crop",
+                budgetCropListTitle: "Your Crops",
+                budgetEmptyText: "✨ No crops added yet. Add your first crop above.",
+                budgetTotalAcresLabel: "Total acres",
+                budgetAcresUnit: "ac",
+                budgetTotalCostLabel: "Total cost",
+                budgetTotalRevenueLabel: "Total revenue",
+                budgetNetProfitLabel: "Net profit",
+                budgetRoiLabel: "ROI",
+                budgetCostBreakdownText: "Total cost breakdown (all crops)",
+                budgetCategoryHeader: "Category",
+                budgetAmountHeader: "Amount (₹)",
+                budgetPercentHeader: "%",
+                budgetExportText: "📥 Download report",
+                budgetDeleteButton: "✕ Remove",
+                budgetCostLabel: "Cost",
+                budgetRevenueLabel: "Revenue",
+                budgetProfitLabel: "Profit",
+                budgetRoiLabelShort: "ROI",
+                seed: "Seed",
+                fertilizer: "Fertilizer",
+                chemicals: "Chemicals",
+                irrigation: "Irrigation",
+                labor: "Labor",
+                harvest: "Harvest",
+                equipment: "Equipment",
+                land: "Land",
+                miscellaneous: "Miscellaneous",
+                total: "Total",
+                generic: "Generic",
+                bushels: "bushels",
+                lbs: "lbs",
+                units: "units",
+                reportHeader: "🌾 AGRICULTURAL BUDGET REPORT (AGV)",
+                portfolioSummary: "📊 PORTFOLIO SUMMARY",
+                breakevenYield: "Breakeven yield",
+                breakevenPrice: "Breakeven price",
+                per: "per",
+                // alerts
+                enterCropName: "Please enter a crop name.",
+                enterPositiveAcres: "Please enter a positive number of acres.",
+                noCropsExport: "No crops to export.",
+                validLandSize: "Please enter a valid land size.",
+            },
+            hi: {
+                // Global header & tabs
+                globalAppTitle: "किसान स्मार्ट फसल एवं लाभ सलाहकार + एजीवी",
+                globalAppSubtitle: "एकीकृत कृषि सलाहकार और बजट",
+                tabCropAdvisor: "फसल सलाहकार",
+                tabProfitAdvisor: "लाभ सलाहकार",
+                tabSmartRec: "स्मार्ट सिफारिशें",
+                tabBudget: "एजीवी बजट योजक",
+                // Crop Advisor
+                cropAdvisorTitle: "फसल चयन सहायक",
+                prevCropLabel: "पिछली फसल",
+                prevCropHint: "यदि पहली फसल है या अज्ञात है तो खाली छोड़ें",
+                soilTypeLabel: "मिट्टी का प्रकार",
+                soilLoam: "दोमट मिट्टी",
+                soilClay: "चिकनी मिट्टी",
+                soilSandy: "रेतीली मिट्टी",
+                soilSilty: "गादली मिट्टी",
+                soilPeaty: "पीटी मिट्टी",
+                cropCategoryLabel: "फसल श्रेणी",
+                catVeg: "सब्जियाँ",
+                catGrain: "अनाज",
+                catFruit: "फल",
+                catCash: "नकदी फसलें",
+                catWood: "लकड़ी / वृक्ष फसलें",
+                catHerb: "जड़ी-बूटियाँ एवं मसाले",
+                seasonLabel: "मौसम",
+                seasonKharif: "खरीफ (बरसात)",
+                seasonRabi: "रबी (सर्दी)",
+                seasonZaid: "ज़ायद (गर्मी)",
+                seasonAny: "कोई भी मौसम",
+                findCropsBtnText: "उपयुक्त फसलें खोजें",
+                recommendedCropsTitle: "अनुशंसित फसलें",
+                cropPlaceholderTitle: "उपयुक्त फसलें खोजें",
+                cropPlaceholderText: "खेत के विवरण भरें, मिट्टी और फसल चक्र के आधार पर सिफारिशें देखें।",
+                // Profit Advisor
+                profitAdvisorTitle: "लाभ कैलकुलेटर",
+                regionLabel: "आपका क्षेत्र",
+                regionNorth: "उत्तर भारत",
+                regionSouth: "दक्षिण भारत",
+                regionEast: "पूर्वी भारत",
+                regionWest: "पश्चिमी भारत",
+                regionCentral: "मध्य भारत",
+                profitSoilLabel: "मिट्टी का प्रकार",
+                profitSoilLoam: "दोमट मिट्टी (सर्वाधिक लाभकारी)",
+                profitSoilClay: "चिकनी मिट्टी",
+                profitSoilSandy: "रेतीली मिट्टी",
+                profitSoilSilty: "गादली मिट्टी",
+                profitSoilBlack: "काली कपास मिट्टी",
+                landSizeLabel: "भूमि का आकार (एकड़)",
+                investmentLabel: "निवेश क्षमता (₹)",
+                calcProfitBtnText: "लाभ की गणना करें",
+                profitAnalysisTitle: "लाभ विश्लेषण",
+                profitPlaceholderTitle: "लाभ विश्लेषण",
+                profitPlaceholderText: "सबसे लाभदायक फसलें देखने के लिए विवरण भरें।",
+                profitSummaryTitle: "सारांश",
+                avgProfitLabel: "औसत लाभ/एकड़",
+                avgInvestmentLabel: "औसत निवेश",
+                avgROILabel: "औसत ROI",
+                // Smart Recommendations
+                smartTitle: "स्मार्ट सिफारिशें",
+                smartPrevCropLabel: "पिछली फसल",
+                smartSoilLabel: "मिट्टी का प्रकार",
+                smartSoilLoam: "दोमट मिट्टी",
+                smartSoilClay: "चिकनी मिट्टी",
+                smartSoilSandy: "रेतीली मिट्टी",
+                smartSoilSilty: "गादली मिट्टी",
+                smartRegionLabel: "क्षेत्र",
+                smartRegionNorth: "उत्तर भारत",
+                smartRegionSouth: "दक्षिण भारत",
+                smartRegionEast: "पूर्वी भारत",
+                smartRegionWest: "पश्चिमी भारत",
+                smartRegionCentral: "मध्य भारत",
+                smartLandSizeLabel: "भूमि आकार (एकड़)",
+                smartInvestmentLabel: "निवेश (₹)",
+                smartBtnText: "स्मार्ट सिफारिशें प्राप्त करें",
+                smartResultsTitle: "स्मार्ट सिफारिशें",
+                smartPlaceholderTitle: "स्मार्ट फसल चयन",
+                smartPlaceholderText: "बुद्धिमान सिफारिशों के लिए विवरण भरें।",
+                // Dynamic card translations
+                duration: "अवधि",
+                days: "दिन",
+                fertilizers: "उर्वरक",
+                suitableFor: "उपयुक्त",
+                soil: "मिट्टी",
+                quickGrowing: "जल्दी बढ़ने वाली फसल",
+                mediumLong: "मध्यम से लंबी अवधि की फसल",
+                investmentCapacity: "निवेश क्षमता",
+                sufficient: "✅ पर्याप्त",
+                insufficient: "⚠️ अपर्याप्त",
+                highProfit: "उच्च लाभ",
+                bestFit: "सर्वोत्तम उपयुक्त",
+                totalProfit: "कुल लाभ",
+                roi: "ROI",
+                investment: "निवेश",
+                profitPerAcre: "लाभ/एकड़",
+                status: "स्थिति",
+                // Budget Planner (Hindi)
+                budgetAddCropTitle: "🌱 नई फसल जोड़ें",
+                budgetCropNameText: "फसल का नाम",
+                budgetAcresText: "एकड़",
+                budgetAddBtnText: "फसल जोड़ें",
+                budgetCropListTitle: "आपकी फसलें",
+                budgetEmptyText: "✨ अभी तक कोई फसल नहीं जोड़ी गई। ऊपर फसल जोड़ें।",
+                budgetTotalAcresLabel: "कुल एकड़",
+                budgetAcresUnit: "एकड़",
+                budgetTotalCostLabel: "कुल लागत",
+                budgetTotalRevenueLabel: "कुल आय",
+                budgetNetProfitLabel: "शुद्ध लाभ",
+                budgetRoiLabel: "निवेश पर प्रतिफल",
+                budgetCostBreakdownText: "कुल लागत का विवरण (सभी फसलें)",
+                budgetCategoryHeader: "मद",
+                budgetAmountHeader: "राशि (₹)",
+                budgetPercentHeader: "%",
+                budgetExportText: "📥 रिपोर्ट डाउनलोड करें",
+                budgetDeleteButton: "✕ हटाएँ",
+                budgetCostLabel: "लागत",
+                budgetRevenueLabel: "आय",
+                budgetProfitLabel: "लाभ",
+                budgetRoiLabelShort: "ROI",
+                seed: "बीज",
+                fertilizer: "उर्वरक",
+                chemicals: "रसायन",
+                irrigation: "सिंचाई",
+                labor: "श्रम",
+                harvest: "कटाई",
+                equipment: "उपकरण",
+                land: "भूमि",
+                miscellaneous: "विविध",
+                total: "कुल",
+                generic: "सामान्य",
+                bushels: "बुशेल",
+                lbs: "किग्रा",
+                units: "इकाई",
+                reportHeader: "🌾 कृषि बजट रिपोर्ट (AGV)",
+                portfolioSummary: "📊 पोर्टफोलियो सारांश",
+                breakevenYield: "सम-विच्छेद उपज",
+                breakevenPrice: "सम-विच्छेद मूल्य",
+                per: "प्रति",
+                // alerts
+                enterCropName: "कृपया फसल का नाम दर्ज करें।",
+                enterPositiveAcres: "कृपया एकड़ की सकारात्मक संख्या दर्ज करें।",
+                noCropsExport: "निर्यात के लिए कोई फसल नहीं।",
+                validLandSize: "कृपया वैध भूमि आकार दर्ज करें।",
+            }
+        };
+
+        // ===== GLOBAL STATE =====
+        let currentLang = 'en';   // default English (can be toggled)
+        let lastCropResults = null;
+        let lastProfitResults = null;
+        let lastProfitInvestment = 0;
+        let lastProfitLandSize = 1;
+        let lastSmartResults = null;
+        let lastSmartInvestment = 0;
+        let lastSmartLandSize = 1;
+
+        // ===== GLOBAL TRANSLATION FUNCTION =====
+        function t(key) {
+            return translations[currentLang][key] || translations['en'][key] || key;
+        }
+
+        // ===== GLOBAL LANGUAGE SETTER =====
+        function setGlobalLanguage(lang) {
+            currentLang = lang;
+            // Toggle active class on global switcher
+            document.getElementById('globalLangEn').classList.toggle('active', lang === 'en');
+            document.getElementById('globalLangHi').classList.toggle('active', lang === 'hi');
+
+            // Update all static UI elements with IDs
+            updateStaticText();
+
+            // Re-render advisor results if they exist (to translate cards)
+            if (lastCropResults) displayCrops(lastCropResults, 'cropGrid', 'cropResultsCount', 'cropResultPlaceholder');
+            if (lastProfitResults) displayProfitCrops(lastProfitResults, lastProfitInvestment, lastProfitLandSize);
+            if (lastSmartResults) displaySmartCrops(lastSmartResults, lastSmartInvestment, lastSmartLandSize);
+
+            // Re-render budget crops and summary
+            if (budgetUserCrops.length > 0) {
+                budgetRenderCropList();
+                budgetRenderSummaryAndBreakdown();
+            } else {
+                document.getElementById('budget-emptyMessage').innerHTML = `<i class="fas fa-seedling"></i><h3>${t('budgetEmptyText')}</h3>`;
+            }
+            // Update budget crop count display
+            document.getElementById('budget-cropCountDisplay').innerText = `${budgetUserCrops.length} ${t('budgetCropListTitle')}`;
+        }
+
+        // ----- Update all static text via ID mapping -----
+        function updateStaticText() {
+            // Map of element IDs to translation keys
+            const idToKey = {
+                // header & tabs
+                globalAppTitle: 'globalAppTitle',
+                globalAppSubtitle: 'globalAppSubtitle',
+                tabCropAdvisor: 'tabCropAdvisor',
+                tabProfitAdvisor: 'tabProfitAdvisor',
+                tabSmartRec: 'tabSmartRec',
+                tabBudget: 'tabBudget',
+                // Crop advisor
+                cropAdvisorTitle: 'cropAdvisorTitle',
+                prevCropLabel: 'prevCropLabel',
+                prevCropHint: 'prevCropHint',
+                soilTypeLabel: 'soilTypeLabel',
+                soilLoam: 'soilLoam',
+                soilClay: 'soilClay',
+                soilSandy: 'soilSandy',
+                soilSilty: 'soilSilty',
+                soilPeaty: 'soilPeaty',
+                cropCategoryLabel: 'cropCategoryLabel',
+                catVeg: 'catVeg',
+                catGrain: 'catGrain',
+                catFruit: 'catFruit',
+                catCash: 'catCash',
+                catWood: 'catWood',
+                catHerb: 'catHerb',
+                seasonLabel: 'seasonLabel',
+                seasonKharif: 'seasonKharif',
+                seasonRabi: 'seasonRabi',
+                seasonZaid: 'seasonZaid',
+                seasonAny: 'seasonAny',
+                findCropsBtnText: 'findCropsBtnText',
+                recommendedCropsTitle: 'recommendedCropsTitle',
+                cropPlaceholderTitle: 'cropPlaceholderTitle',
+                cropPlaceholderText: 'cropPlaceholderText',
+                // Profit advisor
+                profitAdvisorTitle: 'profitAdvisorTitle',
+                regionLabel: 'regionLabel',
+                regionNorth: 'regionNorth',
+                regionSouth: 'regionSouth',
+                regionEast: 'regionEast',
+                regionWest: 'regionWest',
+                regionCentral: 'regionCentral',
+                profitSoilLabel: 'profitSoilLabel',
+                profitSoilLoam: 'profitSoilLoam',
+                profitSoilClay: 'profitSoilClay',
+                profitSoilSandy: 'profitSoilSandy',
+                profitSoilSilty: 'profitSoilSilty',
+                profitSoilBlack: 'profitSoilBlack',
+                landSizeLabel: 'landSizeLabel',
+                investmentLabel: 'investmentLabel',
+                calcProfitBtnText: 'calcProfitBtnText',
+                profitAnalysisTitle: 'profitAnalysisTitle',
+                profitPlaceholderTitle: 'profitPlaceholderTitle',
+                profitPlaceholderText: 'profitPlaceholderText',
+                profitSummaryTitle: 'profitSummaryTitle',
+                avgProfitLabel: 'avgProfitLabel',
+                avgInvestmentLabel: 'avgInvestmentLabel',
+                avgROILabel: 'avgROILabel',
+                // Smart
+                smartTitle: 'smartTitle',
+                smartPrevCropLabel: 'smartPrevCropLabel',
+                smartSoilLabel: 'smartSoilLabel',
+                smartSoilLoam: 'smartSoilLoam',
+                smartSoilClay: 'smartSoilClay',
+                smartSoilSandy: 'smartSoilSandy',
+                smartSoilSilty: 'smartSoilSilty',
+                smartRegionLabel: 'smartRegionLabel',
+                smartRegionNorth: 'smartRegionNorth',
+                smartRegionSouth: 'smartRegionSouth',
+                smartRegionEast: 'smartRegionEast',
+                smartRegionWest: 'smartRegionWest',
+                smartRegionCentral: 'smartRegionCentral',
+                smartLandSizeLabel: 'smartLandSizeLabel',
+                smartInvestmentLabel: 'smartInvestmentLabel',
+                smartBtnText: 'smartBtnText',
+                smartResultsTitle: 'smartResultsTitle',
+                smartPlaceholderTitle: 'smartPlaceholderTitle',
+                smartPlaceholderText: 'smartPlaceholderText',
+                // Budget
+                budgetAddCropTitle: 'budgetAddCropTitle',
+                budgetCropNameText: 'budgetCropNameText',
+                budgetAcresText: 'budgetAcresText',
+                budgetAddBtnText: 'budgetAddBtnText',
+                budgetCropListTitle: 'budgetCropListTitle',
+                budgetEmptyText: 'budgetEmptyText',
+                budgetTotalAcresLabel: 'budgetTotalAcresLabel',
+                budgetAcresUnit: 'budgetAcresUnit',
+                budgetTotalCostLabel: 'budgetTotalCostLabel',
+                budgetTotalRevenueLabel: 'budgetTotalRevenueLabel',
+                budgetNetProfitLabel: 'budgetNetProfitLabel',
+                budgetRoiLabel: 'budgetRoiLabel',
+                budgetCostBreakdownText: 'budgetCostBreakdownText',
+                budgetCategoryHeader: 'budgetCategoryHeader',
+                budgetAmountHeader: 'budgetAmountHeader',
+                budgetPercentHeader: 'budgetPercentHeader',
+                budgetExportText: 'budgetExportText',
+                footerText: 'globalAppTitle', // reuse
+            };
+            for (let [id, key] of Object.entries(idToKey)) {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'SELECT') continue;
+                    el.innerText = t(key);
+                }
+            }
+            // Special handling for placeholders
+            document.getElementById('prevCrop').placeholder = t('prevCropLabel');
+            document.getElementById('budget-cropNameInput').placeholder = t('budgetCropNameText');
+            document.getElementById('budget-acresInput').placeholder = t('budgetAcresText');
+        }
+
+        // ==================== ADVISOR CODE (adapted with t()) ====================
+        const cropDB = { /* ... full cropDB ... */ 
+            vegetable: [{name:"Tomato",icon:"🍅",family:"Solanaceae",soil:["Loam","Sandy","Silty"],duration:90,fertilizers:["Urea","DAP"]},{name:"Potato",icon:"🥔",family:"Solanaceae",soil:["Loam","Clay"],duration:120,fertilizers:["Potash"]},{name:"Carrot",icon:"🥕",family:"Apiaceae",soil:["Loam","Sandy"],duration:80,fertilizers:["DAP"]},{name:"Cabbage",icon:"🥬",family:"Brassicaceae",soil:["Loam","Clay"],duration:100,fertilizers:["Urea"]},{name:"Lettuce",icon:"🥬",family:"Asteraceae",soil:["Loam","Silty"],duration:60,fertilizers:["NPK"]}],
+            grain: [{name:"Wheat",icon:"🌾",family:"Poaceae",soil:["Loam","Clay"],duration:120,fertilizers:["Urea"]},{name:"Rice",icon:"🌾",family:"Poaceae",soil:["Clay","Loam","Silty"],duration:130,fertilizers:["Urea","DAP"]},{name:"Maize",icon:"🌽",family:"Poaceae",soil:["Loam","Sandy"],duration:100,fertilizers:["NPK"]},{name:"Barley",icon:"🌾",family:"Poaceae",soil:["Loam"],duration:110,fertilizers:["Urea"]},{name:"Oats",icon:"🌾",family:"Poaceae",soil:["Loam","Clay"],duration:100,fertilizers:["DAP"]}],
+            fruit: [{name:"Apple",icon:"🍎",family:"Rosaceae",soil:["Loam","Silty"],duration:150,fertilizers:["Potash"]},{name:"Banana",icon:"🍌",family:"Musaceae",soil:["Loam","Silty"],duration:180,fertilizers:["Urea","Potash"]},{name:"Strawberry",icon:"🍓",family:"Rosaceae",soil:["Loam","Silty"],duration:90,fertilizers:["NPK"]},{name:"Grapes",icon:"🍇",family:"Vitaceae",soil:["Loam","Sandy"],duration:120,fertilizers:["Potash"]},{name:"Papaya",icon:"🍈",family:"Caricaceae",soil:["Loam","Sandy"],duration:150,fertilizers:["NPK"]}],
+            cash: [{name:"Cotton",icon:"🧶",family:"Malvaceae",soil:["Loam","Black"],duration:150,fertilizers:["Urea"]},{name:"Sunflower",icon:"🌻",family:"Asteraceae",soil:["Loam","Sandy"],duration:110,fertilizers:["NPK"]},{name:"Sugarcane",icon:"🎋",family:"Poaceae",soil:["Loam","Clay"],duration:300,fertilizers:["Urea"]},{name:"Jute",icon:"🌾",family:"Malvaceae",soil:["Loam","Clay"],duration:120,fertilizers:["DAP"]}],
+            wood: [{name:"Teak",icon:"🌳",family:"Lamiaceae",soil:["Loam"],duration:365,fertilizers:["Organic"]},{name:"Bamboo",icon:"🎍",family:"Poaceae",soil:["Loam","Sandy"],duration:365,fertilizers:["Organic"]},{name:"Neem",icon:"🌿",family:"Meliaceae",soil:["Loam","Sandy"],duration:365,fertilizers:["Organic"]},{name:"Mahogany",icon:"🌲",family:"Meliaceae",soil:["Loam","Clay"],duration:365,fertilizers:["Organic"]}],
+            herb: [{name:"Basil",icon:"🌿",family:"Lamiaceae",soil:["Loam","Silty"],duration:45,fertilizers:["NPK"]},{name:"Mint",icon:"🌱",family:"Lamiaceae",soil:["Loam","Silty"],duration:50,fertilizers:["NPK"]},{name:"Coriander",icon:"🌿",family:"Apiaceae",soil:["Loam","Silty"],duration:55,fertilizers:["NPK"]},{name:"Turmeric",icon:"🌿",family:"Zingiberaceae",soil:["Loam","Clay"],duration:240,fertilizers:["Organic"]},{name:"Ginger",icon:"🌿",family:"Zingiberaceae",soil:["Loam","Clay"],duration:240,fertilizers:["Organic"]}]
+        };
+        const profitDB = { /* full profitDB */
+            north: [{name:"Basmati Rice",icon:"🌾",profitPerAcre:85000,investmentPerAcre:45000,duration:120,soil:["Loam","Clay"]},{name:"Wheat",icon:"🌾",profitPerAcre:65000,investmentPerAcre:35000,duration:110,soil:["Loam","Clay"]},{name:"Sugarcane",icon:"🎋",profitPerAcre:120000,investmentPerAcre:80000,duration:300,soil:["Loam","Clay","Black"]},{name:"Potato",icon:"🥔",profitPerAcre:95000,investmentPerAcre:55000,duration:90,soil:["Loam","Sandy"]}],
+            south: [{name:"Coconut",icon:"🥥",profitPerAcre:180000,investmentPerAcre:120000,duration:365,soil:["Sandy","Loam"]},{name:"Banana",icon:"🍌",profitPerAcre:150000,investmentPerAcre:90000,duration:180,soil:["Loam","Clay"]},{name:"Turmeric",icon:"🌿",profitPerAcre:200000,investmentPerAcre:100000,duration:240,soil:["Loam","Clay"]},{name:"Coffee",icon:"☕",profitPerAcre:160000,investmentPerAcre:110000,duration:365,soil:["Loam","Silty"]}],
+            east: [{name:"Jute",icon:"🌾",profitPerAcre:75000,investmentPerAcre:40000,duration:120,soil:["Clay","Loam"]},{name:"Tea",icon:"🍃",profitPerAcre:130000,investmentPerAcre:90000,duration:365,soil:["Loam","Silty"]},{name:"Pineapple",icon:"🍍",profitPerAcre:120000,investmentPerAcre:70000,duration:180,soil:["Sandy","Loam"]},{name:"Rice",icon:"🌾",profitPerAcre:80000,investmentPerAcre:45000,duration:130,soil:["Clay","Loam"]}],
+            west: [{name:"Cotton",icon:"🧶",profitPerAcre:95000,investmentPerAcre:55000,duration:150,soil:["Black","Loam"]},{name:"Groundnut",icon:"🥜",profitPerAcre:70000,investmentPerAcre:40000,duration:100,soil:["Sandy","Loam"]},{name:"Soybean",icon:"🫘",profitPerAcre:65000,investmentPerAcre:35000,duration:95,soil:["Black","Loam"]},{name:"Onion",icon:"🧅",profitPerAcre:120000,investmentPerAcre:60000,duration:110,soil:["Loam","Sandy"]}],
+            central: [{name:"Soybean",icon:"🫘",profitPerAcre:70000,investmentPerAcre:40000,duration:95,soil:["Black","Loam"]},{name:"Wheat",icon:"🌾",profitPerAcre:70000,investmentPerAcre:40000,duration:110,soil:["Loam","Clay"]},{name:"Orange",icon:"🍊",profitPerAcre:160000,investmentPerAcre:100000,duration:365,soil:["Loam","Sandy"]},{name:"Tomato",icon:"🍅",profitPerAcre:130000,investmentPerAcre:70000,duration:85,soil:["Loam","Sandy"]}]
+        };
+
+        function formatIndianNumber(num) { if (isNaN(num)) return '0'; const numStr = Math.round(num).toString(); const lastThree = numStr.substring(numStr.length-3); const otherNumbers = numStr.substring(0, numStr.length-3); if (otherNumbers !== '') return otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",")+","+lastThree; else return lastThree; }
+        function parseIndianNumber(numStr) { const cleaned = numStr.replace(/,/g,''); const number = parseFloat(cleaned); return isNaN(number) ? 0 : number; }
+        function setupInvestmentInput(inputId) {
+            const input = document.getElementById(inputId); if(!input) return;
+            input.addEventListener('input', function(e) { let value = this.value.replace(/,/g,'').replace(/[^\d]/g,''); if(value.length>3){ const lastThree = value.substring(value.length-3); const otherNumbers = value.substring(0, value.length-3); if(otherNumbers !== '') value = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + "," + lastThree; } this.value = value; });
+        }
+
+        // ----- Advisor display functions with t() integration -----
+        function displayCrops(crops, gridId, countId, placeholderId) {
+            lastCropResults = crops; // store for re-render
+            const grid = document.getElementById(gridId);
+            const count = document.getElementById(countId);
+            const placeholder = document.getElementById(placeholderId);
+            if (crops.length === 0) {
+                grid.innerHTML = '';
+                count.textContent = `0 ${t('recommendedCropsTitle')}`;
+                placeholder.style.display = 'block';
+                return;
+            }
+            placeholder.style.display = 'none';
+            count.textContent = `${crops.length} ${t('recommendedCropsTitle')}`;
+            grid.innerHTML = '';
+            crops.forEach(crop => {
+                const card = document.createElement('div'); card.className = 'crop-card';
+                card.innerHTML = `
+                    <div class="crop-card-header">
+                        <div class="crop-icon">${crop.icon}</div>
+                        <div><div class="crop-name">${crop.name}</div><div class="crop-family">${crop.family}</div></div>
+                    </div>
+                    <div class="crop-details">
+                        <div class="crop-detail"><i class="fas fa-clock"></i><span><strong>${t('duration')}:</strong> ${crop.duration} ${t('days')}</span></div>
+                        <div class="crop-detail"><i class="fas fa-flask"></i><span><strong>${t('fertilizers')}:</strong></span></div>
+                        <div class="fertilizers">${crop.fertilizers.map(fert => `<span class="fertilizer-tag">${fert}</span>`).join('')}</div>
+                    </div>
+                    <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-top:5px;">
+                        <div style="font-size:0.9rem;">${t('suitableFor')} ${crop.soil.join(', ')} ${t('soil')}. ${crop.duration < 100 ? t('quickGrowing') : t('mediumLong')}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function displayProfitCrops(crops, investment, landSize) {
+            lastProfitResults = crops; lastProfitInvestment = investment; lastProfitLandSize = landSize;
+            const grid = document.getElementById('profitGrid');
+            const count = document.getElementById('profitResultsCount');
+            const placeholder = document.getElementById('profitResultPlaceholder');
+            const summary = document.getElementById('profitSummary');
+            if (crops.length === 0) {
+                grid.innerHTML = ''; count.textContent = `0 ${t('profitAnalysisTitle')}`;
+                placeholder.style.display = 'block'; summary.style.display = 'none'; return;
+            }
+            placeholder.style.display = 'none'; summary.style.display = 'block';
+            count.textContent = `${crops.length} ${t('profitAnalysisTitle')}`;
+            grid.innerHTML = '';
+            let totalProfit = 0, totalInvestment = 0, totalROI = 0;
+            crops.forEach((crop, index) => {
+                totalProfit += crop.totalProfit; totalInvestment += crop.totalInvestment; totalROI += crop.roi;
+                const card = document.createElement('div'); card.className = 'crop-card';
+                if (index < 3) {
+                    const badge = document.createElement('div'); badge.style.position = 'absolute'; badge.style.top = '15px'; badge.style.right = '15px';
+                    badge.style.background = index === 0 ? '#e74c3c' : index === 1 ? '#f39c12' : '#27ae60';
+                    badge.style.color = 'white'; badge.style.width = '30px'; badge.style.height = '30px';
+                    badge.style.borderRadius = '50%'; badge.style.display = 'flex'; badge.style.alignItems = 'center';
+                    badge.style.justifyContent = 'center'; badge.style.fontWeight = 'bold';
+                    badge.textContent = `#${index + 1}`; card.appendChild(badge);
+                }
+                card.innerHTML += `
+                    <div class="crop-card-header">
+                        <div class="crop-icon">${crop.icon}</div>
+                        <div><div class="crop-name">${crop.name}</div><div class="crop-family">${crop.duration} ${t('days')} • ${landSize} ${t('budgetAcresUnit')}</div></div>
+                    </div>
+                    <div class="profit-details">
+                        <div class="profit-item"><div class="profit-value">₹${formatIndianNumber(crop.totalProfit)}</div><div class="profit-label-small">${t('totalProfit')}</div></div>
+                        <div class="profit-item"><div class="profit-value">${crop.roi}%</div><div class="profit-label-small">${t('roi')}</div></div>
+                        <div class="profit-item"><div class="profit-value">₹${formatIndianNumber(crop.totalInvestment)}</div><div class="profit-label-small">${t('investment')}</div></div>
+                        <div class="profit-item"><div class="profit-value">₹${formatIndianNumber(crop.profitPerAcre)}</div><div class="profit-label-small">${t('profitPerAcre')}</div></div>
+                    </div>
+                    <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-top:5px;">
+                        <div style="font-size:0.9rem;">${t('investmentCapacity')}: ₹${formatIndianNumber(investment)} | ${t('status')}: ${investment >= crop.totalInvestment ? t('sufficient') : t('insufficient')}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+            document.getElementById('avgProfit').innerText = `₹${formatIndianNumber(totalProfit / crops.length / landSize)}`;
+            document.getElementById('avgInvestment').innerText = `₹${formatIndianNumber(totalInvestment / crops.length)}`;
+            document.getElementById('avgROI').innerText = `${Math.round(totalROI / crops.length)}%`;
+        }
+
+        function displaySmartCrops(crops, investment, landSize) {
+            lastSmartResults = crops; lastSmartInvestment = investment; lastSmartLandSize = landSize;
+            const grid = document.getElementById('smartGrid');
+            const count = document.getElementById('smartResultsCount');
+            const placeholder = document.getElementById('smartResultPlaceholder');
+            if (crops.length === 0) {
+                grid.innerHTML = ''; count.textContent = `0 ${t('smartResultsTitle')}`;
+                placeholder.style.display = 'block'; return;
+            }
+            placeholder.style.display = 'none'; count.textContent = `${crops.length} ${t('smartResultsTitle')}`;
+            grid.innerHTML = '';
+            crops.forEach(crop => {
+                const card = document.createElement('div'); card.className = 'crop-card';
+                const badge = document.createElement('div'); badge.style.position = 'absolute'; badge.style.top = '15px'; badge.style.right = '15px';
+                badge.style.background = crop.type === 'profit' ? '#3498db' : '#9b59b6'; badge.style.color = 'white';
+                badge.style.padding = '5px 10px'; badge.style.borderRadius = '15px'; badge.style.fontSize = '0.8rem';
+                badge.style.fontWeight = '600'; badge.textContent = crop.type === 'profit' ? t('highProfit') : t('bestFit');
+                card.appendChild(badge);
+                card.innerHTML += `
+                    <div class="crop-card-header">
+                        <div class="crop-icon">${crop.icon}</div>
+                        <div><div class="crop-name">${crop.name}</div><div class="crop-family">${crop.family || 'Various'} • ${crop.duration} ${t('days')}</div></div>
+                    </div>
+                    <div class="crop-details">
+                        <div class="crop-detail"><i class="fas fa-chart-line"></i><span><strong>${t('roi')}:</strong> ${crop.roi}%</span></div>
+                        <div class="crop-detail"><i class="fas fa-money-bill-wave"></i><span><strong>${t('profitPerAcre')}:</strong> ₹${formatIndianNumber(crop.profitPerAcre)}</span></div>
+                        ${crop.fertilizers ? `<div class="crop-detail"><i class="fas fa-flask"></i><span><strong>${t('fertilizers')}:</strong></span></div><div class="fertilizers">${crop.fertilizers.map(fert => `<span class="fertilizer-tag">${fert}</span>`).join('')}</div>` : ''}
+                    </div>
+                    <div class="profit-details">
+                        <div class="profit-item"><div class="profit-value">₹${formatIndianNumber(crop.totalProfit)}</div><div class="profit-label-small">${t('totalProfit')}</div></div>
+                        <div class="profit-item"><div class="profit-value">₹${formatIndianNumber(crop.totalInvestment)}</div><div class="profit-label-small">${t('investment')}</div></div>
+                    </div>
+                    <div style="background:#f8f9fa; padding:12px; border-radius:8px; margin-top:5px;">
+                        <div style="font-size:0.9rem;">${crop.type === 'profit' ? t('highProfit') : t('bestFit')}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // ==================== BUDGET MAKER (globalized, using t()) ====================
+        const budgetINR_PER_USD = 83;
+        const budgetCropDatabase = {
+            corn: { name:'Corn', icon:'🌽', seedCost:120, fertilizerCost:180, chemicalsCost:85, irrigationCost:60, laborCost:95, harvestCost:110, expectedYield:180, expectedPrice:5.50, unitKey:'bushels' },
+            soybeans: { name:'Soybeans', icon:'🌱', seedCost:75, fertilizerCost:95, chemicalsCost:70, irrigationCost:50, laborCost:80, harvestCost:95, expectedYield:55, expectedPrice:13.00, unitKey:'bushels' },
+            wheat: { name:'Wheat', icon:'🌾', seedCost:65, fertilizerCost:110, chemicalsCost:55, irrigationCost:40, laborCost:70, harvestCost:85, expectedYield:75, expectedPrice:7.20, unitKey:'bushels' },
+            tomatoes: { name:'Tomatoes', icon:'🍅', seedCost:450, fertilizerCost:320, chemicalsCost:280, irrigationCost:200, laborCost:850, harvestCost:600, expectedYield:40000, expectedPrice:0.35, unitKey:'lbs' },
+            strawberries: { name:'Strawberries', icon:'🍓', seedCost:1800, fertilizerCost:450, chemicalsCost:600, irrigationCost:350, laborCost:4200, harvestCost:2800, expectedYield:22000, expectedPrice:0.90, unitKey:'lbs' },
+            cotton: { name:'Cotton', icon:'🌿', seedCost:110, fertilizerCost:150, chemicalsCost:120, irrigationCost:80, laborCost:200, harvestCost:180, expectedYield:900, expectedPrice:0.80, unitKey:'lbs' },
+            potatoes: { name:'Potatoes', icon:'🥔', seedCost:350, fertilizerCost:250, chemicalsCost:200, irrigationCost:150, laborCost:300, harvestCost:280, expectedYield:30000, expectedPrice:0.15, unitKey:'lbs' }
+        };
+        const budgetGenericCrop = { name:'Generic', icon:'🌿', seedCost:150, fertilizerCost:150, chemicalsCost:80, irrigationCost:60, laborCost:150, harvestCost:120, expectedYield:100, expectedPrice:1.00, unitKey:'units' };
+
+        let budgetUserCrops = [];
+
+        function budgetGetCropDataByName(inputName) {
+            if (!inputName || inputName.trim()==='') return null;
+            const name = inputName.trim().toLowerCase();
+            if (budgetCropDatabase[name]) return budgetCropDatabase[name];
+            for (let key in budgetCropDatabase) { if (name.includes(key) || key.includes(name)) return budgetCropDatabase[key]; }
+            return null;
+        }
+        function budgetCalculateBudget(cropData, acres) {
+            const c = cropData; const a=acres;
+            const seed = c.seedCost*a; const fertilizer = c.fertilizerCost*a; const chemicals = c.chemicalsCost*a;
+            const irrigation = c.irrigationCost*a; const labor = c.laborCost*a; const harvest = c.harvestCost*a;
+            const equipment = 45*a; const land = 120*a; const miscellaneous = 35*a;
+            const totalVariable = seed+fertilizer+chemicals+irrigation+labor+harvest; const totalFixed = equipment+land+miscellaneous;
+            const totalCosts = totalVariable+totalFixed;
+            const expectedYield = c.expectedYield*a; const expectedRevenue = expectedYield*c.expectedPrice;
+            const netProfit = expectedRevenue-totalCosts; const breakevenYield = totalCosts/c.expectedPrice; const breakevenPrice = totalCosts/(c.expectedYield*a);
+            const roi = totalCosts>0?(netProfit/totalCosts)*100:0;
+            return { costs: { seed,fertilizer,chemicals,irrigation,labor,harvest,equipment,land,miscellaneous,totalVariable,totalFixed,total:totalCosts,perAcre:totalCosts/a },
+                revenue: { expectedYield, yieldPerAcre:c.expectedYield, pricePerUnit:c.expectedPrice, total:expectedRevenue, perAcre:expectedRevenue/a },
+                profit: { net:netProfit, perAcre:netProfit/a, roi, breakevenYield, breakevenPrice }, unitKey:c.unitKey, icon:c.icon };
+        }
+        function budgetFormatINR(usdAmount) { const inr = usdAmount * budgetINR_PER_USD; return `₹${Math.round(inr).toLocaleString()} (AGV)`; }
+        function budgetFormatNumber(num) { return Math.round(num).toLocaleString(); }
+
+        window.budgetAddCrop = function() {
+            const nameInput = document.getElementById('budget-cropNameInput');
+            const acresInput = document.getElementById('budget-acresInput');
+            let cropName = nameInput.value.trim(); let acres = parseFloat(acresInput.value);
+            if (!cropName) { alert(t('enterCropName')); return; }
+            if (isNaN(acres) || acres<=0) { alert(t('enterPositiveAcres')); return; }
+            let cropData = budgetGetCropDataByName(cropName); let isGeneric = false;
+            if (!cropData) { cropData = budgetGenericCrop; isGeneric = true; }
+            const displayName = cropName;
+            const usedData = { ...cropData, name: displayName, icon: isGeneric?'🌱':cropData.icon };
+            const budget = budgetCalculateBudget(usedData, acres);
+            budgetUserCrops.push({ id: Date.now()+Math.random(), displayName, acres, cropData: usedData, budget, isGeneric });
+            nameInput.value = ''; acresInput.value = '10';
+            budgetRenderCropList(); budgetRenderSummaryAndBreakdown();
+            document.getElementById('budget-summaryPanel').style.display = 'grid';
+            document.getElementById('budget-costBreakdownSection').style.display = 'block';
+        };
+
+        window.budgetDeleteCrop = function(id) {
+            budgetUserCrops = budgetUserCrops.filter(c => c.id !== id);
+            budgetRenderCropList(); budgetRenderSummaryAndBreakdown();
+            if (budgetUserCrops.length===0) {
+                document.getElementById('budget-summaryPanel').style.display = 'none';
+                document.getElementById('budget-costBreakdownSection').style.display = 'none';
+            }
+        };
+
+        function budgetRenderCropList() {
+            const container = document.getElementById('budget-cropListContainer');
+            if (budgetUserCrops.length === 0) {
+                container.innerHTML = `<div class="result-placeholder"><i class="fas fa-seedling"></i><h3>${t('budgetEmptyText')}</h3></div>`;
+                document.getElementById('budget-cropCountDisplay').innerText = `0 ${t('budgetCropListTitle')}`;
+                return;
+            }
+            let html = '';
+            budgetUserCrops.forEach(crop => {
+                const b = crop.budget; const profitClass = b.profit.net>=0?'profit':'loss'; const profitSign = b.profit.net>=0?'+':'-';
+                html += `<div class="budget-crop-item">
+                    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:16px;">
+                        <div style="display:flex; align-items:baseline; gap:20px;">
+                            <span class="crop-name">${crop.cropData.icon} ${crop.displayName}</span>
+                            <span class="crop-acres" style="background:#e8f5e9; padding:6px 16px; border-radius:40px; font-weight:600; color:#2e7d32;">${crop.acres.toFixed(1)} ${t('budgetAcresUnit')}</span>
+                        </div>
+                        <div style="display:flex; gap:30px; margin-left:20px; flex-wrap:wrap; color:#424242;">
+                            <div>${t('budgetCostLabel')} <span style="font-weight:700; color:#1b5e20;">${budgetFormatINR(b.costs.total)}</span></div>
+                            <div>${t('budgetRevenueLabel')} <span style="font-weight:700; color:#1b5e20;">${budgetFormatINR(b.revenue.total)}</span></div>
+                            <div class="${profitClass}">${t('budgetProfitLabel')} <span>${profitSign}${budgetFormatINR(Math.abs(b.profit.net))}</span></div>
+                            <div>${t('budgetRoiLabelShort')} <span style="font-weight:700; color:#1b5e20;">${b.profit.roi.toFixed(1)}%</span></div>
+                        </div>
+                    </div>
+                    <button class="delete-btn" onclick="budgetDeleteCrop(${crop.id})">${t('budgetDeleteButton')}</button>
+                </div>`;
+            });
+            container.innerHTML = html;
+            document.getElementById('budget-cropCountDisplay').innerText = `${budgetUserCrops.length} ${t('budgetCropListTitle')}`;
+        }
+
+        function budgetRenderSummaryAndBreakdown() {
+            if (budgetUserCrops.length===0) return;
+            let totalAcres=0, totalCostUSD=0, totalRevenueUSD=0, totalProfitUSD=0;
+            let costSumsUSD = { seed:0, fertilizer:0, chemicals:0, irrigation:0, labor:0, harvest:0, equipment:0, land:0, miscellaneous:0 };
+            budgetUserCrops.forEach(c=>{ const b=c.budget; totalAcres+=c.acres; totalCostUSD+=b.costs.total; totalRevenueUSD+=b.revenue.total; totalProfitUSD+=b.profit.net; 
+                costSumsUSD.seed+=b.costs.seed; costSumsUSD.fertilizer+=b.costs.fertilizer; costSumsUSD.chemicals+=b.costs.chemicals; costSumsUSD.irrigation+=b.costs.irrigation; costSumsUSD.labor+=b.costs.labor; costSumsUSD.harvest+=b.costs.harvest; costSumsUSD.equipment+=b.costs.equipment; costSumsUSD.land+=b.costs.land; costSumsUSD.miscellaneous+=b.costs.miscellaneous;
+            });
+            const totalRoi = totalCostUSD>0 ? (totalProfitUSD/totalCostUSD)*100 : 0;
+            document.getElementById('budget-totalAcres').innerText = totalAcres.toFixed(1);
+            document.getElementById('budget-totalCost').innerHTML = budgetFormatINR(totalCostUSD);
+            document.getElementById('budget-totalRevenue').innerHTML = budgetFormatINR(totalRevenueUSD);
+            document.getElementById('budget-totalProfit').innerHTML = budgetFormatINR(totalProfitUSD);
+            document.getElementById('budget-totalRoi').innerText = totalRoi.toFixed(1);
+            const totalCostSumUSD = Object.values(costSumsUSD).reduce((a,b)=>a+b,0);
+            let tbody = ''; const categories = ['seed','fertilizer','chemicals','irrigation','labor','harvest','equipment','land','miscellaneous'];
+            const labelKeys = ['seed','fertilizer','chemicals','irrigation','labor','harvest','equipment','land','miscellaneous'];
+            categories.forEach((key,idx)=>{ const amountUSD = costSumsUSD[key]; const percent = totalCostSumUSD>0 ? ((amountUSD/totalCostSumUSD)*100).toFixed(1):'0.0'; tbody += `<tr><td>${t(labelKeys[idx])}</td><td>${budgetFormatINR(amountUSD)}</td><td>${percent}%</td></tr>`; });
+            tbody += `<tr style="border-top:2px solid #2e7d32; font-weight:700;"><td>${t('total')}</td><td>${budgetFormatINR(totalCostSumUSD)}</td><td>100%</td></tr>`;
+            document.getElementById('budget-costBreakdownBody').innerHTML = tbody;
+        }
+
+        window.budgetExportReport = function() {
+            if (budgetUserCrops.length===0) { alert(t('noCropsExport')); return; }
+            let report = `${t('reportHeader')}\n`+'='.repeat(60)+`\nDate: ${new Date().toLocaleString(currentLang==='hi'?'hi-IN':'en-IN')}\n\n`;
+            budgetUserCrops.forEach(c=>{ const b=c.budget; const unitTrans = t(b.unitKey)||b.unitKey;
+                report += `${c.cropData.icon} ${c.displayName} – ${c.acres.toFixed(1)} ${t('budgetAcresUnit')}\n  ${t('budgetCostLabel')}:       ${budgetFormatINR(b.costs.total)}\n  ${t('budgetRevenueLabel')}:    ${budgetFormatINR(b.revenue.total)}\n  ${t('budgetProfitLabel')}:     ${b.profit.net>=0?'+':'-'}${budgetFormatINR(Math.abs(b.profit.net))}\n  ${t('budgetRoiLabelShort')}:   ${b.profit.roi.toFixed(1)}%\n  ${t('breakevenYield')}: ${budgetFormatNumber(b.profit.breakevenYield)} ${unitTrans}\n  ${t('breakevenPrice')}: ₹${(b.profit.breakevenPrice*budgetINR_PER_USD).toFixed(2)} (AGV) ${t('per')} ${unitTrans}\n\n`;
+            });
+            let totAcres=0,totCostUSD=0,totRevUSD=0,totProfitUSD=0; budgetUserCrops.forEach(c=>{ totAcres+=c.acres; totCostUSD+=c.budget.costs.total; totRevUSD+=c.budget.revenue.total; totProfitUSD+=c.budget.profit.net; });
+            const totRoi = totCostUSD>0?(totProfitUSD/totCostUSD)*100:0;
+            report += `${t('portfolioSummary')}\n`+'-'.repeat(40)+`\n${t('budgetTotalAcresLabel')}:   ${totAcres.toFixed(1)} ${t('budgetAcresUnit')}\n${t('budgetTotalCostLabel')}:    ${budgetFormatINR(totCostUSD)}\n${t('budgetTotalRevenueLabel')}: ${budgetFormatINR(totRevUSD)}\n${t('budgetNetProfitLabel')}:    ${totProfitUSD>=0?'+':'-'}${budgetFormatINR(Math.abs(totProfitUSD))}\n${t('budgetRoiLabel')}:          ${totRoi.toFixed(1)}%\n`;
+            const blob = new Blob([report],{type:'text/plain'}); const url = window.URL.createObjectURL(blob); const a = document.createElement('a'); a.href=url; a.download = currentLang==='hi'?`कृषि_बजट_${new Date().toISOString().slice(0,10)}.txt`:`agri_budget_${new Date().toISOString().slice(0,10)}.txt`; a.click(); window.URL.revokeObjectURL(url);
+        };
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+
+            // Background toggle
+            const bgToggleBtn = document.getElementById('bgToggleBtn');
+            const backgrounds = [
+                'https://images.unsplash.com/photo-1500382017468-9049fed747ef',
+                'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8',
+                'https://images.unsplash.com/photo-1501785888041-af3ef285b470',
+                'https://images.unsplash.com/photo-1574943320219-553eb213f72d'
+            ];
+            let bgIndex = 0;
+            bgToggleBtn.addEventListener('click', function() {
+                bgIndex = (bgIndex + 1) % backgrounds.length;
+                document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${backgrounds[bgIndex]}?w=2070&q=80')`;
+            });
+
+            // Setup investment inputs
+            setupInvestmentInput('investment');
+            setupInvestmentInput('smartInvestment');
+
+            // Advisor event listeners
+            document.getElementById('findCropsBtn').addEventListener('click', function() {
+                const prevCrop = document.getElementById('prevCrop').value.trim().toLowerCase();
+                const soilType = document.getElementById('soilType').value;
+                const cropCategory = document.getElementById('cropCategory').value;
+                const crops = cropDB[cropCategory] || [];
+                let filteredCrops = crops.filter(crop => crop.soil.includes(soilType));
+                if (prevCrop) {
+                    const prevCropObj = Object.values(cropDB).flat().find(c => c.name.toLowerCase() === prevCrop);
+                    if (prevCropObj) filteredCrops = filteredCrops.filter(crop => crop.family !== prevCropObj.family);
+                }
+                displayCrops(filteredCrops, 'cropGrid', 'cropResultsCount', 'cropResultPlaceholder');
+            });
+
+            document.getElementById('calculateProfitBtn').addEventListener('click', function() {
+                const region = document.getElementById('region').value;
+                const soil = document.getElementById('profitSoil').value;
+                const landSize = parseFloat(document.getElementById('landSize').value) || 1;
+                const investment = parseIndianNumber(document.getElementById('investment').value);
+                if (!landSize || landSize <= 0) { alert(t('validLandSize')); return; }
+                const crops = profitDB[region] || [];
+                const filteredCrops = crops.filter(c => c.soil.includes(soil));
+                const cropsWithProfit = filteredCrops.map(c => {
+                    const totalProfit = c.profitPerAcre * landSize;
+                    const totalInvestment = c.investmentPerAcre * landSize;
+                    const roi = Math.round(((totalProfit - totalInvestment) / totalInvestment) * 100);
+                    return { ...c, totalProfit, totalInvestment, roi, profitLevel: roi>100?'high':roi>50?'medium':'low' };
+                }).sort((a,b) => b.roi - a.roi);
+                displayProfitCrops(cropsWithProfit, investment, landSize);
+            });
+
+            document.getElementById('smartRecommendBtn').addEventListener('click', function() {
+                const prevCrop = document.getElementById('smartPrevCrop').value.trim().toLowerCase();
+                const soil = document.getElementById('smartSoil').value;
+                const region = document.getElementById('smartRegion').value;
+                const landSize = parseFloat(document.getElementById('smartLandSize').value) || 1;
+                const investment = parseIndianNumber(document.getElementById('smartInvestment').value);
+                const allCrops = [];
+                const profitCrops = profitDB[region] || [];
+                profitCrops.forEach(crop => {
+                    if (crop.soil.includes(soil)) {
+                        const totalProfit = crop.profitPerAcre * landSize;
+                        const totalInvestment = crop.investmentPerAcre * landSize;
+                        const roi = Math.round(((totalProfit - totalInvestment) / totalInvestment) * 100);
+                        allCrops.push({ ...crop, type: 'profit', totalProfit, totalInvestment, roi, profitLevel: roi>100?'high':roi>50?'medium':'low', score: roi*0.7 + (crop.profitPerAcre/1000)*0.3 });
+                    }
+                });
+                Object.values(cropDB).flat().forEach(crop => {
+                    if (crop.soil.includes(soil)) {
+                        let rotationScore = 1;
+                        if (prevCrop) {
+                            const prevCropObj = Object.values(cropDB).flat().find(c => c.name.toLowerCase() === prevCrop);
+                            if (prevCropObj && prevCropObj.family === crop.family) rotationScore = 0.5;
+                        }
+                        const estimatedProfit = crop.duration < 100 ? 60000 : crop.duration < 200 ? 90000 : 120000;
+                        const estimatedInvestment = estimatedProfit * 0.6;
+                        const estimatedROI = Math.round(((estimatedProfit - estimatedInvestment) / estimatedInvestment) * 100);
+                        allCrops.push({ ...crop, type: 'suitability', profitPerAcre: estimatedProfit, investmentPerAcre: estimatedInvestment, totalProfit: estimatedProfit * landSize, totalInvestment: estimatedInvestment * landSize, roi: estimatedROI, profitLevel: estimatedROI>100?'high':estimatedROI>50?'medium':'low', score: rotationScore * (estimatedROI*0.5 + (1000-crop.duration)*0.5) });
+                    }
+                });
+                const uniqueCrops = []; const seenNames = new Set();
+                allCrops.sort((a,b) => b.score - a.score).forEach(crop => { if (!seenNames.has(crop.name)) { seenNames.add(crop.name); uniqueCrops.push(crop); } });
+                displaySmartCrops(uniqueCrops.slice(0,8), investment, landSize);
+            });
+
+            // Budget listeners
+            document.getElementById('budget-cropNameInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') { e.preventDefault(); budgetAddCrop(); } });
+            document.getElementById('budget-acresInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') { e.preventDefault(); budgetAddCrop(); } });
+
+            // Set default language (English)
+            setGlobalLanguage('en');
+        });
+    </script>
+</body>
+</html>
